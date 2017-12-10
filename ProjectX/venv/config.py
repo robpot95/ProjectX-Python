@@ -13,6 +13,10 @@ monsterList = {
         "health": 10,
         "attack": 5,
         "defense": 5,
+        "loot": [
+            ("iron sword", 1),
+            ("iron helmet", 1)
+        ]
     },
     "troll": {
         "baseLevel": 5,
@@ -51,19 +55,6 @@ monsterList = {
     }
 }
 
-expTable = {
-    1: 0,
-    2: 100,
-    3: 200,
-    4: 400,
-    5: 600,
-    6: 900,
-    7: 1200,
-    8: 1500,
-    9: 1700,
-    10: 2000
-
-}
-
 def getExpForLevel(level):
-    return expTable[level]
+    level -= 1
+    return (50 * level * level) - (75 * level) + (125 * level)
