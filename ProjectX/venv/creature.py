@@ -8,18 +8,26 @@ class Creature:
     _level = 1
     _health = 100
     _healthMax = 100
+    _attackValue = 1
+    _defenseValue = 1
 
-    def __init__(self, name, level, health, healthMax):
+    def __init__(self, name, level):
         self._name = name
         self._level = level
-        self._health = health
-        self._healthMax = healthMax
 
+    # Methods
+    def doAttacking(self, target):
+        print(self._name, target.getName())
+
+    def onDeath(self, killer):
+        pass
+
+    # Getters & Setters
     def setName(self, name):
         self._name = name
 
     def getName(self):
-        return self._name
+        return self._name.capitalize()
 
     def setLevel(self, level):
         self._level = level
@@ -39,5 +47,20 @@ class Creature:
     def getMaxHealth(self):
         return self._healthMax
 
+    def getAttackValue(self):
+        return self._attackValue
+
+    def getDefenseValue(self):
+        return self._defenseValue
+
+    def isPlayer(self):
+        return False
+
+    def isMonster(self):
+        return False
+
+    def isCreature(self):
+        return True
+
     def getType(self):
-        print("Creature")
+        return "Creature"

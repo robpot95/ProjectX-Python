@@ -5,7 +5,7 @@ import textwrap
 import time
 
 #Custom class
-import const
+import config
 import gameworld
 from player import Player
 
@@ -30,16 +30,16 @@ def setupCharacter():
 
     professionValid = False
     while (professionValid != True):
-        professionInput = input(sendTextMessage("What profession would you like to be? " + ", ".join(const.professionList.keys()) + "?\n> ")).capitalize()
+        professionInput = input(sendTextMessage("What profession would you like to be? " + ", ".join(config.professionList.keys()) + "?\n> ")).capitalize()
 
-        if professionInput in const.professionList:
-            professionDescription = input(sendTextMessage(const.professionList.get(professionInput) + " Are you sure?\n> "))
+        if professionInput in config.professionList:
+            professionDescription = input(sendTextMessage(config.professionList.get(professionInput) + " Are you sure?\n> "))
             if (professionDescription.capitalize() == "Yes"):
                 professionValid = True
 
 
     sendTextMessage("A new character has been created. Your name will be: {} and your profession is: {}\n".format(nameInput, professionInput))
-    newPlayer = Player(nameInput, 1, 100, 100, professionInput)
+    newPlayer = Player(nameInput, 1, professionInput)
 
     time.sleep(1)
     clear = lambda: os.system('cls')
