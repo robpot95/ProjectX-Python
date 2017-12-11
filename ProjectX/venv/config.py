@@ -14,8 +14,9 @@ monsterList = {
         "attack": 5,
         "defense": 5,
         "loot": [
-            ("iron sword", 1),
-            ("iron helmet", 1)
+            ("iron sword", 5, 1),
+            ("iron helmet", 10, 1),
+            ("gold coins", 100, 50)
         ]
     },
     "troll": {

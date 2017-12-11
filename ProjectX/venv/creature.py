@@ -8,8 +8,8 @@ class Creature:
     _level = 1
     _health = 100
     _healthMax = 100
-    _attackValue = 1
-    _defenseValue = 1
+    _attackValue = 0
+    _defenseValue = 0
 
     def __init__(self, name, level):
         self._name = name
@@ -47,10 +47,10 @@ class Creature:
     def getMaxHealth(self):
         return self._healthMax
 
-    def getAttackValue(self):
+    def getAttack(self):
         return self._attackValue
 
-    def getDefenseValue(self):
+    def getDefense(self):
         return self._defenseValue
 
     def isPlayer(self):

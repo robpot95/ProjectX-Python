@@ -1,6 +1,7 @@
 from creature import Creature
 
 import config
+import random
 
 class Monster(Creature):
     def __init__(self, name, level):
@@ -8,6 +9,18 @@ class Monster(Creature):
 
     def onDeath(self, killer):
         killer.addExperience(config.monsterList[self._name]["experience"] * self._level, True)
+
+        # Droppa loot
+        for loot in config.monsterList[self._name]["loot"]:
+            randomValue = random.randint(0, 100)
+            if randomValue < loot[1]:
+                count = randomValue % loot[2] + 1
+                print("You have looted {} {}.".format(count, loot[0]))
+
+                if loot[0] == "gold coins":
+                    killer.addMoney(count)
+                else:
+                    killer.addInventoryItem(loot[0])
 
     def getBaseLevel(self):
         return config.monsterList[self._name]["baseLevel"]

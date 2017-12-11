@@ -4,6 +4,8 @@ from creature import Creature
 class Player(Creature):
     __profession = 0
     __experience = 0
+    __inventory = []
+    __money = 0
 
     def __init__(self, name, level, profession):
         self.__profession = profession
@@ -28,6 +30,21 @@ class Player(Creature):
 
         if self._level != previousLevel:
             print("You advanced from Level {} to Level {}.".format(previousLevel, self._level))
+
+    def addInventoryItem(self, itemName):
+        self.__inventory.append(itemName)
+
+    def removeInvetoryItem(self, itemName):
+        self.__inventory.remove(itemName)
+
+    def getInventory(self):
+        return self.__inventory
+
+    def addMoney(self, count):
+        self.__money += count
+
+    def getMoney(self):
+        return self.__money
 
     # Getters & Setters
     def setProfession(self, profession):
