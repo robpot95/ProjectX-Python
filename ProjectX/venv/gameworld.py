@@ -1,6 +1,7 @@
 import random
 import sys
 
+import combat
 import config
 import game
 from player import Player
@@ -42,23 +43,28 @@ def sendGameWorld(player):
 
                 rolledDice = True
         elif int(option) == 2:
-            huntingList = {
-                "easy": ["orc", "troll"],
-                "medium": ["vampire", "cyclops"],
-                "hard": ["demon", "dragon"]
-            }
+            # Generera en huntingList
+            huntingList = {}
+            for name, info in config.monsterList.items():
+                level = int(info["baseLevel"])
+                if level < 10:
+                    huntingList.setdefault("easy", []).append(name)
+                elif level < 15:
+                    huntingList.setdefault("medium", []).append(name)
+                else:
+                    huntingList.setdefault("hard", []).append(name)
 
             chooseDifficulty = input("Choose difficulty between: easy, medium or hard.\n> ")
             while not chooseDifficulty in ["easy", "medium", "hard"]:
                 chooseDifficulty = input("Choose difficulty between: easy, medium or hard.\n> ")
 
-            chooseMonster = input("What monster would you like to fight? " + str(huntingList[chooseDifficulty]) + "?\n>")
+            chooseMonster = input("What monster would you like to fight? " + ", ".join(huntingList[chooseDifficulty]) + "?\n>")
             if chooseMonster in huntingList[chooseDifficulty]:
                 monster = Monster(chooseMonster.lower(), None)
-                monster.onDeath(player)
+                combat.executeFight(player, monster)
         elif int(option) == 3:
             game.sendTextMessage("#Loading character status#\n")
-            print("Name: {}, Level: {}\nHealth: {}/{}, Profession: {}\nAttack: {}, Defense: {}\nMoney: {}, Inventory: {}".format(player.getName(), player.getLevel(), player.getHealth(), player.getMaxHealth(), player.getProfession(), player.getAttack(), player.getDefense(), player.getMoney(), player.getInventory()))
+            print("Name: {}, Level: {}\nHealth: {}/{}, Profession: {}\nAttack: {}, Defense: {}\nMoney: {}, Inventory: {}".format(player.getName(), player.getLevel(), player.getHealth(), player.getMaxHealth(), player.getProfession(), player.getAttack(), player.getDefense(), player.getMoney(), ", ".join(player.getInventory()) or "Empty"))
         elif int(option) == 4:
             # To-do spara spelarens framsteg
             print("Logging out.")
