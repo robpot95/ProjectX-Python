@@ -1,4 +1,5 @@
 #Inbyggda
+import json
 import os
 import sys
 import textwrap
@@ -53,5 +54,37 @@ def sendTextMessage(message):
         time.sleep(0.05)
     return ""
 
+def savePlayer(player):
+    with open('data.txt', 'w') as outputFile:
+        data = {
+            "name": player.getName(),
+            "level": player.getLevel(),
+            "profession": player.getProfession(),
+            "health": player.getHealth(),
+            "maxHealth": player.getMaxHealth(),
+            "experience": player.getExperience(),
+            "money": player.getMoney(),
+            "inventory": player.getInventory()
+        }
+        outputFile.write(json.dumps(data, default = lambda o: o.__dict__, sort_keys = False, indent = 4))
+
+def loadPlayer():
+    try:
+        data = json.load(open('data.txt'))
+    except:
+        data = False
+
+    return data
+
 def init():
-    setupCharacter()
+    playerInfo = loadPlayer()
+    if playerInfo:
+        player = Player(playerInfo["name"], 1, playerInfo["profession"])
+        player.setHealth(playerInfo["health"])
+        player.setMaxHealth(playerInfo["maxHealth"])
+        player.addExperience(playerInfo["experience"], False)
+        player.addMoney(playerInfo["money"])
+        player.setInventory(playerInfo["inventory"])
+        gameworld.sendGameWorld(player)
+    else:
+        setupCharacter()

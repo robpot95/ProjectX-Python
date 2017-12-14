@@ -4,8 +4,8 @@ from creature import Creature
 class Player(Creature):
     __profession = 0
     __experience = 0
-    __inventory = []
     __money = 0
+    __inventory = []
 
     def __init__(self, name, level, profession):
         self.__profession = profession
@@ -33,10 +33,18 @@ class Player(Creature):
                 break
 
         if self._level != previousLevel:
-            print("You advanced from Level {} to Level {}.".format(previousLevel, self._level))
+            if sendText:
+                print("You advanced from Level {} to Level {}.".format(previousLevel, self._level))
 
     def wearItem(self):
         pass
+
+    # Getters & Setters
+    def getInventory(self):
+        return self.__inventory
+
+    def setInventory(self, inventory):
+        self.__inventory = inventory
 
     def addInventoryItem(self, itemName):
         self.__inventory.append(itemName)
@@ -44,21 +52,23 @@ class Player(Creature):
     def removeInvetoryItem(self, itemName):
         self.__inventory.remove(itemName)
 
-    def getInventory(self):
-        return self.__inventory
-
     def addMoney(self, count):
         self.__money += count
 
     def getMoney(self):
         return self.__money
 
-    # Getters & Setters
     def setProfession(self, profession):
         self.__profession = profession
 
     def getProfession(self):
         return self.__profession
+
+    def setExperience(self, value):
+        self.__experience = value
+
+    def getExperience(self):
+        return self.__experience
 
     def isPlayer(self):
         return True

@@ -5,7 +5,12 @@ import random
 
 class Monster(Creature):
     def __init__(self, name, level):
-        super(Monster, self).__init__(name, level or config.monsterList[name]["baseLevel"])
+        info = config.monsterList[name]
+        self._attackValue = info["attack"]
+        self._defenseValue = info["defense"]
+        self._health = info["health"]
+        self._healthMax = info["health"]
+        super(Monster, self).__init__(name, level or info["baseLevel"])
 
     def onDeath(self, killer):
         killer.addExperience(config.monsterList[self._name]["experience"] * self._level, True)

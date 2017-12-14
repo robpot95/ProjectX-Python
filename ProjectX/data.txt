@@ -1,0 +1,13 @@
+{
+    "name": "Rob",
+    "level": 8,
+    "profession": "Mage",
+    "health": 825,
+    "maxHealth": 840,
+    "experience": 3250,
+    "money": 374,
+    "inventory": [
+        "iron helmet",
+        "iron helmet"
+    ]
+}

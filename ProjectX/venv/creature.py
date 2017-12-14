@@ -3,6 +3,8 @@ Detta är vår basklass för alla slags varelser från Monsters, Npcs (Non Playi
 På detta sätt kan vi dela samma logik mellan alla varelser och har små skiljningar som player har professions
 '''
 
+import random
+
 class Creature:
     _name = ""
     _level = 1
@@ -16,8 +18,10 @@ class Creature:
         self._level = level
 
     # Methods
-    def doAttacking(self, target):
-        print(self._name, target.getName())
+    def drainHealth(self, damage = None):
+        damge = random.uniform(self._defenseValue / 2, self._defenseValue - (self._defenseValue % 2 + 1)) or 1
+        print("{} has lost {} / {} hitpoints.".format(self.getName(), damage, self.getHealth()))
+        self._health -= damage
 
     def onDeath(self, killer):
         pass

@@ -67,5 +67,6 @@ def sendGameWorld(player):
             print("Name: {}, Level: {}\nHealth: {}/{}, Profession: {}\nAttack: {}, Defense: {}\nMoney: {}, Inventory: {}".format(player.getName(), player.getLevel(), player.getHealth(), player.getMaxHealth(), player.getProfession(), player.getAttack(), player.getDefense(), player.getMoney(), ", ".join(player.getInventory()) or "Empty"))
         elif int(option) == 4:
             # To-do spara spelarens framsteg
-            print("Logging out.")
+            game.savePlayer(player)
+            game.sendTextMessage("Saving player... Logging out.")
             sys.exit()
