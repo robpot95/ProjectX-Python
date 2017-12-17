@@ -10,8 +10,8 @@ class Creature:
     _level = 1
     _health = 100
     _healthMax = 100
-    _attackValue = 0
-    _defenseValue = 0
+    _attackValue = 10
+    _defenseValue = 10
 
     def __init__(self, name, level):
         self._name = name
@@ -19,7 +19,9 @@ class Creature:
 
     # Methods
     def drainHealth(self, damage = None):
-        damge = random.uniform(self._defenseValue / 2, self._defenseValue - (self._defenseValue % 2 + 1)) or 1
+        damage -= int(random.uniform(self._defenseValue / 2, self._defenseValue))
+        damage = max(random.randint(1, 5), damage)
+
         print("{} has lost {} / {} hitpoints.".format(self.getName(), damage, self.getHealth()))
         self._health -= damage
 
@@ -38,6 +40,9 @@ class Creature:
 
     def getLevel(self):
         return self._level
+
+    def addHealth(self, health):
+        self._health += health
 
     def setHealth(self, health):
         self._health = health

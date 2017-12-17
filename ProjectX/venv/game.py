@@ -34,7 +34,7 @@ def setupCharacter():
         professionInput = input(sendTextMessage("What profession would you like to be? " + ", ".join(config.professionList.keys()) + "?\n> ")).capitalize()
 
         if professionInput in config.professionList:
-            professionDescription = input(sendTextMessage(config.professionList.get(professionInput) + " Are you sure?\n> "))
+            professionDescription = input(sendTextMessage(config.professionList.get(professionInput)["description"] + " Are you sure?\n> "))
             if (professionDescription.capitalize() == "Yes"):
                 professionValid = True
 
@@ -79,6 +79,18 @@ def loadPlayer():
 def init():
     playerInfo = loadPlayer()
     if playerInfo:
+        option = input(sendTextMessage("Would you like to 1. New Game or 2. Continue Game.\n> "))
+        if not option.isdigit():
+            sys.exit()
+
+        if int(option) == 1:
+            open('data.txt', 'w').close()
+            setupCharacter()
+        elif int(option) == 2:
+            pass
+        else:
+            sys.exit()
+
         player = Player(playerInfo["name"], 1, playerInfo["profession"])
         player.setHealth(playerInfo["health"])
         player.setMaxHealth(playerInfo["maxHealth"])

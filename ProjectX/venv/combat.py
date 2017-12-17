@@ -1,22 +1,28 @@
-#Här tar vi hand om all slagsmål som sker på spelet
+#Här tar vi hand om all slagsmål som sker på spelet, vi använder turn-based combat
 import time
 
 from player import Player
 from monster import Monster
 
 def executeFight(player, monster):
+    attacker = None
+    target = None
+    lastTurn = "Monster"
     while (True):
-        if monster.getHealth() > 0:
-            monster.drainHealth(player.getAttack())
-        else:
-            monster.onDeath(player)
-            break
+        if lastTurn == "Player":
+            attacker = monster
+            target = player
+            lastTurn = "Monster"
+        elif lastTurn == "Monster":
+            attacker = player
+            target = monster
+            lastTurn = "Player"
 
-        if player.getHealth() > 0:
-            player.drainHealth(monster.getAttack())
-            pass
-        else:
-            print("You lost the fight.")
+        if attacker != None and target != None:
+            target.drainHealth(attacker.getAttack())
 
-        # Vi skadar varandra varje 1.5 sekunder
+            if target.getHealth() <= 0:
+                target.onDeath(attacker)
+                break
+
         time.sleep(1.5)

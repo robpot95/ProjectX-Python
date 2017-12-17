@@ -2,7 +2,7 @@ import config
 from creature import Creature
 
 class Player(Creature):
-    __profession = 0
+    __profession = None
     __experience = 0
     __money = 0
     __inventory = []
@@ -24,10 +24,10 @@ class Player(Creature):
         previousLevel = self._level
         while self.__experience >= config.getExpForLevel(self._level + 1):
             self._level += 1
-            self._health += 10
-            self._healthMax += 10
-            self._attackValue += 5
-            self._defenseValue += 5
+            self._health += config.getHealthGain(self.__profession)
+            self._healthMax += config.getHealthGain(self.__profession)
+            self._attackValue += config.getAttackGain(self.__profession)
+            self._defenseValue += config.getDefenseGain(self.__profession)
 
             if self._level >= config.maxLevel:
                 break

@@ -10,12 +10,24 @@ from monster import Monster
 def sendGameWorld(player):
     # Vi fortsätter skicka vår gameWorld så länge spelaren exsisterar
     while True:
+        if player.getHealth() <= 0:
+            healingInput = input("You are dead, please write heal.\n> ")
+            if healingInput == "heal":
+                player.addHealth(player.getMaxHealth())
+                print("You are fully recovered.")
+            else:
+                continue
+
         option = input("###  Welcome " + player.getName() + " ###\nWhat would you like todo 1. Gamble 2. Hunting 3. Status 4. Exit\n> ")
 
         if not option.isdigit():
             continue
 
         if int(option) == 1:
+            if player.getMoney() < 10:
+                print("You need minium 10 gold coins to gamble.")
+                continue
+
             rolledDice = False
             while (rolledDice != True):
                 betAmountInput = input("How much would you like to bet\n>")
@@ -47,9 +59,9 @@ def sendGameWorld(player):
             huntingList = {}
             for name, info in config.monsterList.items():
                 level = int(info["baseLevel"])
-                if level < 10:
+                if level < 5:
                     huntingList.setdefault("easy", []).append(name)
-                elif level < 15:
+                elif level < 10:
                     huntingList.setdefault("medium", []).append(name)
                 else:
                     huntingList.setdefault("hard", []).append(name)
@@ -58,9 +70,10 @@ def sendGameWorld(player):
             while not chooseDifficulty in ["easy", "medium", "hard"]:
                 chooseDifficulty = input("Choose difficulty between: easy, medium or hard.\n> ")
 
-            chooseMonster = input("What monster would you like to fight? " + ", ".join(huntingList[chooseDifficulty]) + "?\n>")
+            chooseMonster = input("What monster would you like to fight? " + ", ".join(huntingList[chooseDifficulty]) + "?\n> ")
             if chooseMonster in huntingList[chooseDifficulty]:
                 monster = Monster(chooseMonster.lower(), None)
+                monster.adjustStatus()
                 combat.executeFight(player, monster)
         elif int(option) == 3:
             game.sendTextMessage("#Loading character status#\n")
