@@ -1,11 +1,20 @@
 import config
 from creature import Creature
+import item
 
 class Player(Creature):
     __profession = None
     __experience = 0
     __money = 0
     __inventory = []
+    __equipment = {
+        "weapon": None,
+        "shield": None,
+        "head": None,
+        "armor": None,
+        "legs": None,
+        "boots": None
+    }
 
     def __init__(self, name, level, profession):
         self.__profession = profession
@@ -36,10 +45,32 @@ class Player(Creature):
             if sendText:
                 print("You advanced from Level {} to Level {}.".format(previousLevel, self._level))
 
-    def wearItem(self):
-        pass
+    def wearItem(self, _item):
+        info = item.getInfo(_item)
+        if info == None:
+            print(_item + " does not exsist.")
+            return
+
+        slot = self.__equipment[info["slot"]]
+        if not slot == None:
+            # Om slot är tagen, gör en exchange
+            exchangeInput = input("Would you like to switch your {} to {}?\n> ".format(slot, _item))
+            if exchangeInput.lower() == "yes":
+                self.__inventory.append(slot)
+                print("Now you wearing {} and your {} has been moved to your inventory.".format(_item, slot))
+            else:
+                return
+
+        self.__inventory.remove(_item)
+        self.__equipment[info["slot"]] = _item
 
     # Getters & Setters
+    def getEquipment(self):
+        return self.__equipment
+
+    def addEquipment(self, eq):
+        self.__equipment = eq
+
     def getInventory(self):
         return self.__inventory
 

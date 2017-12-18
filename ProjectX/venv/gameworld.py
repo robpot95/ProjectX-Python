@@ -10,6 +10,7 @@ from monster import Monster
 def sendGameWorld(player):
     # Vi fortsätter skicka vår gameWorld så länge spelaren exsisterar
     while True:
+        # Healing system
         if player.getHealth() <= 0:
             healingInput = input("You are dead, please write heal.\n> ")
             if healingInput == "heal":
@@ -18,7 +19,7 @@ def sendGameWorld(player):
             else:
                 continue
 
-        option = input("###  Welcome " + player.getName() + " ###\nWhat would you like todo 1. Gamble 2. Hunting 3. Status 4. Exit\n> ")
+        option = input("###  Welcome " + player.getName() + " ###\nWhat would you like todo 1. Gamble 2. Hunting 3. Character 4. Exit\n> ")
 
         if not option.isdigit():
             continue
@@ -76,8 +77,22 @@ def sendGameWorld(player):
                 monster.adjustStatus()
                 combat.executeFight(player, monster)
         elif int(option) == 3:
-            game.sendTextMessage("#Loading character status#\n")
-            print("Name: {}, Level: {}\nHealth: {}/{}, Profession: {}\nAttack: {}, Defense: {}\nMoney: {}, Inventory: {}".format(player.getName(), player.getLevel(), player.getHealth(), player.getMaxHealth(), player.getProfession(), player.getAttack(), player.getDefense(), player.getMoney(), ", ".join(player.getInventory()) or "Empty"))
+            game.sendTextMessage("#Loading character#\n")
+            characterOption = input("1. Character Status\n2. Inventory\n3. Equipment\n> ")
+
+            if int(characterOption) == 1:
+                print("Name: {}, Level: {}\nHealth: {}/{}, Profession: {}\nAttack: {}, Defense: {}\nMoney: {}, Inventory: {}".format(player.getName(), player.getLevel(), player.getHealth(), player.getMaxHealth(), player.getProfession(), player.getAttack(), player.getDefense(), player.getMoney(), ", ".join(player.getInventory()) or "Empty"))
+            elif int(characterOption) == 2:
+                if len(player.getInventory()) == 0:
+                    print("Your inventory is empty.")
+                    return
+
+                inventoryInput = input("You got these items in your inventory: " + ", ".join(player.getInventory()) + ". Would you like equip these items?\n> ")
+                if inventoryInput.lower() == "yes":
+                    itemInput = input("What item would you like to wear? " + ", ".join(player.getInventory()) + "\n> ")
+                    player.wearItem(itemInput.lower())
+            elif int(characterOption) == 3:
+                print(player.getEquipment())
         elif int(option) == 4:
             # To-do spara spelarens framsteg
             game.savePlayer(player)

@@ -64,6 +64,7 @@ def savePlayer(player):
             "maxHealth": player.getMaxHealth(),
             "experience": player.getExperience(),
             "money": player.getMoney(),
+            "equipment": player.getEquipment(),
             "inventory": player.getInventory()
         }
         outputFile.write(json.dumps(data, default = lambda o: o.__dict__, sort_keys = False, indent = 4))
@@ -96,6 +97,7 @@ def init():
         player.setMaxHealth(playerInfo["maxHealth"])
         player.addExperience(playerInfo["experience"], False)
         player.addMoney(playerInfo["money"])
+        player.addEquipment(playerInfo["equipment"])
         player.setInventory(playerInfo["inventory"])
         gameworld.sendGameWorld(player)
     else:

@@ -1,12 +1,21 @@
 {
     "name": "Roberto",
-    "level": 2,
+    "level": 57,
     "profession": "Warrior",
-    "health": 126,
-    "maxHealth": 130,
-    "experience": 100,
-    "money": 28,
+    "health": 7176,
+    "maxHealth": 7180,
+    "experience": 163360,
+    "money": 108,
+    "equipment": {
+        "weapon": "giant sword",
+        "shield": null,
+        "head": null,
+        "armor": null,
+        "legs": null,
+        "boots": null
+    },
     "inventory": [
-        "iron helmet"
+        "iron helmet",
+        "iron sword"
     ]
 }

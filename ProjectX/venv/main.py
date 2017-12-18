@@ -5,5 +5,5 @@ import game
 
 print("Welcome to {}. Game version: {}, created by {}".format(definitions.gameName, definitions.gameVersion, definitions.gameCreator))
 
-#Start Game
+#Start Gamez
 game.init()
